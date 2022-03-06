@@ -10,15 +10,15 @@ import {
 import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setUserData,  } from './../features/userSlice';
+import { setUserData } from './../features/userSlice';
 
 // import { RootState } from './../store/store';
 
 import { FC } from 'react';
 
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 interface IUserLogin {
   name: string;
@@ -27,7 +27,8 @@ interface IUserLogin {
 
 const Login: FC = () => {
   const [user, setUser] = useState<IUserLogin>({ name: '', password: '' });
-  let navigate  = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
@@ -38,8 +39,8 @@ const Login: FC = () => {
     });
   };
 
-  const dispatch = useDispatch();
   // const dados = useSelector((state: RootState) => state.userData);
+  // console.log(dados);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,13 +54,15 @@ const Login: FC = () => {
       })
       .then((response) => {
         console.log(response.data);
-        
+
         dispatch(setUserData(response.data));
-        navigate('/dash')
+        navigate('/dash');
       })
       .catch((error) => {
         console.log(error);
       });
+
+    setUser({ name: '', password: '' });
   };
 
   return (

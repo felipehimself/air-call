@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useGetCallsQuery } from '../services/service';
 import styled from 'styled-components';
+import { Bars } from 'react-loading-icons'
 
 const CallsDash = () => {
 
